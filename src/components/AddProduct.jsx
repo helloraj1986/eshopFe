@@ -5,7 +5,6 @@ import {
 	Button,
 	FormControlLabel,
 	Checkbox,
-	Grid,
 	Card,
 	CardContent,
 	CardHeader,
@@ -13,12 +12,15 @@ import {
 	Select,
 	InputLabel,
 	FormControl,
+	Grid,
 } from "@mui/material";
+
 import moment from "moment";
+import { addProduct } from "../api/productsApi";
 
 const categoryOptions = ["Mobile", "Car", "Laptop", "Furniture", "Clothing"];
 
-const AddProduct = ({ onProductAdded }) => {
+const AddProduct = () => {
 	const [product, setProduct] = useState({
 		name: "",
 		category: "",
@@ -41,8 +43,7 @@ const AddProduct = ({ onProductAdded }) => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const response = await axios.post("/api/products", product);
-			onProductAdded(response.data); // Notify the parent component (ProductList)
+			await addProduct(product);
 			setProduct({
 				name: "",
 				category: "",

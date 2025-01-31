@@ -5,12 +5,14 @@ import {
 	CardContent,
 	CardHeader,
 	Typography,
+	Grid,
 } from "@mui/material";
-import Grid from "@mui/material/Grid2";
-import { useNavigate } from "react-router-dom";
-import { deleteProduct } from "../api/productsApi";
 
-const ProductCard = ({ product }) => {
+import { useNavigate } from "react-router-dom";
+import { deleteProduct, fetchProducts } from "../api/productsApi";
+import { useProductsContext } from "../Context/ProductsContext";
+
+const ProductCard = ({ product, handleDeleteProduct }) => {
 	const navigate = useNavigate();
 
 	// Add the addToCart function to the ProductCard component
@@ -44,7 +46,7 @@ const ProductCard = ({ product }) => {
 							color="secondary"
 							size="small"
 							sx={{ mr: 1 }}
-							onClick={() => deleteProduct(product.id)}>
+							onClick={() => handleDeleteProduct(product.id)}>
 							Delete
 						</Button>
 						<Button
