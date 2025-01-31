@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import Grid from "@mui/material/Grid2";
+import { Grid } from "@mui/material";
 import ProductCard from "./ProductCard";
 import { useProductsContext } from "../Context/ProductsContext";
-import { fetchProducts } from "../api/productsApi";
+import { deleteProduct, fetchProducts } from "../api/productsApi";
 
 const ProductList = () => {
 	const [products, setProducts] = useState([]);
-	const { updateProductContextProps } = useProductsContext();
+	const { updateProductContextProps, productContextData } = useProductsContext();
 
 	useEffect(() => {
 		let isMounted = true;
@@ -26,6 +26,18 @@ const ProductList = () => {
 		};
 	}, []);
 
+	const handleDeleteProduct = async (id) => {
+		await deleteProduct(id);
+		const updatedProducts = productContextData.allProducts.filter(
+			(product) => product.id !== id
+		);
+		updateProductContextProps({
+			...productContextData,
+			allProducts: updatedProducts,
+		});
+		setProducts(updatedProducts);
+	};
+
 	return (
 		<>
 			{products.length === 0 ? (
@@ -34,7 +46,10 @@ const ProductList = () => {
 				<div className="container mx-auto p-4">
 					<Grid container spacing={3}>
 						{products.map((product, index) => (
-							<ProductCard product={product} />
+							<ProductCard
+								product={product}
+								handleDeleteProduct={handleDeleteProduct}
+							/>
 						))}
 					</Grid>
 				</div>

@@ -4,6 +4,7 @@ import { ProductsProvider } from "./Context/ProductsContext";
 import ProductDetails from "./components/ProductsDetails";
 import NavBar from "./components/NavBar";
 import AddProduct from "./components/AddProduct";
+import ProductList from "./components/ProductList";
 // import Cart from "./pages/Cart"; // Create this file
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
     <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/products" element={<ProductList />} />
         <Route path="/product/:id" element={<ProductDetails />} /> 
         <Route path="/add-product" element={<AddProduct />} />
         {/* <Route path="/cart" element={<Cart />} /> */}
